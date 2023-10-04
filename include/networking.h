@@ -9,6 +9,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include "./logging.h"
+
 struct socket_name_info{
     char host[INET6_ADDRSTRLEN];
     char port[NI_MAXSERV];

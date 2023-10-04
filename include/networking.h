@@ -26,7 +26,7 @@ struct socket_connection {
 int get_socket(struct socket_connection *server_socket, char *address, unsigned int port);
 int bind_to_socket(struct socket_connection server_socket);
 int connect_to_socket(struct socket_connection server_socket);
-int listen_to_socket(struct socket_connection serer_socket, unsigned int backlog);
+int listen_to_socket(struct socket_connection server_socket, unsigned int backlog);
 
 
 int hostname_to_ip(char *hostname, unsigned int port, char *ip);

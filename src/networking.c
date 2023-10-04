@@ -130,3 +130,18 @@ int connect_to_socket(struct socket_connection server_socket){
     }
     return 0;
 }
+/**
+ * @brief Listen for connections on the server socket
+ * listen() marks the socket referred to by sockfd as a passive
+ * socket, that is, as a socket that will be used to accept incoming
+ * connection requests using accept(2).
+**/
+int listen_to_socket(struct socket_connection server_socket, unsigned int backlog){
+    int listen_status  = listen(server_socket.socket_fd,backlog);
+    if(listen_status < 0){
+        log_err("Failed to listen on %s%s",server_socket.socket_name.host,server_socket.socket_name.port);
+        close(server_socket.socket_fd);
+        return -1;
+    }
+    return 0;
+}

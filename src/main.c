@@ -9,6 +9,11 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[]){
 
+#include "../include/networking.h"
+
+
+int main(int argc, char *argv[]){
+    //start
+    struct socket_connection client_socket;
 }

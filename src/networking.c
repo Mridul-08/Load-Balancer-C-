@@ -145,3 +145,31 @@ int listen_to_socket(struct socket_connection server_socket, unsigned int backlo
     }
     return 0;
 }
+
+int hostname_to_ip(char *hostname, unsigned int port, char *ip){
+    struct addrinfo hints, *servinfo, *p;
+    struct sockaddr_in *h;
+    int rv;
+
+    char port_str[7];
+    sprintf(port_str,"%d",port);
+    
+    //cycle to all available IPs
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+
+    if((rv = getaddrinfo(hostname, port_str, &hints, &servinfo))!=0){
+        log_err("Cannot resolve address %s:%d",hostname, port);
+        return -1;
+    }
+
+    //loop through all the results
+    for (p = servinfo; p!= NULL; p = p->ai_next){
+        h = (struct sockaddr_in *)p->ai_addr;
+        strcpy(ip, inet_ntoa(h->sin_addr));
+    }
+
+    freeaddrinfo(servinfo); //cleanup
+    return 0;
+}

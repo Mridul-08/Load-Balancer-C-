@@ -100,3 +100,33 @@ int bind_to_socket(struct socket_connection server_socket){
    return 0;
 
 }
+
+/**
+ * @brief Connect to the socket for data transfer, usually a client side function
+ * connect() is used to connect to the socket to send and receive data. After a successful connection only, 
+ * we can use other methods on the socket file descriptor to undergo various network operations
+**/
+int connect_to_socket(struct socket_connection server_socket){
+
+    /**
+       The connect() system call connects the socket referred to by the
+       file descriptor sockfd to the address specified by addr.  The
+       addrlen argument specifies the size of addr.  The format of the
+       address in addr is determined by the address space of the socket
+       sockfd.
+
+       If the socket sockfd is of type SOCK_DGRAM, then addr is the
+       address to which datagrams are sent by default, and the only
+       address from which datagrams are received.  If the socket is of
+       type SOCK_STREAM or SOCK_SEQPACKET, this call attempts to make a
+       connection to the socket that is bound to the address specified
+       by addr.
+    **/
+   socklen_t server_address_size = sizeof(server_socket.address);
+    if(connect(server_socket.socket_fd,(struct sockaddr *)&server_socket.address, server_address_size) < 0){
+        log_err("Failed to connect %s%s", server_socket.socket_name.host,server_socket.socket_name.port);
+        close(server_socket.socket_fd);
+        return -1;
+    }
+    return 0;
+}

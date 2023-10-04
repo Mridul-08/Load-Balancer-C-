@@ -76,3 +76,27 @@ int get_socket(
 
     return 0;
 }
+
+
+/**
+ * @brief Assign address to the socket
+ * After the creation of the socket, the bind function binds the socket to the address and port number specified in addr(custom data structure).
+**/
+
+int bind_to_socket(struct socket_connection server_socket){
+
+    /*
+    * Function Used: int bind(int socket_fd, const struct sockaddr *addr,socklen_t addrlen);
+    * bind() assigns the address specified by addr to the socket referred to by the file descriptor socket_fd.
+    * addrlen specifies the size, in bytes, of the address structure pointed to by addr.
+    */
+
+    socklen_t server_address_size = sizeof(server_socket.address);
+    if(bind( server_socket.socket_fd, (struct sockaddr *)&server_socket.address, server_address_size) < 0) {
+        log_err("Failed to bind the address with the server socket");
+        close(server_socket.socket_fd);
+        return -1;
+    }
+   return 0;
+
+}

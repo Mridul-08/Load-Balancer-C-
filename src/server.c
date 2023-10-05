@@ -28,3 +28,20 @@ int create_server(
             server_socket->socket_name.port);
     return 0;
 }
+
+
+/**
+ * @brief Accept incoming request, make use of accept function
+ * @see https://man7.org/linux/man-pages/man2/accept.2.html
+ **/
+int accept_incoming_connection(struct socket_connection sever_socket){
+
+    int new_connection_fd = accept(sever_socket.socket_fd, (struct sockaddr *)NULL, NULL);
+    if(new_connection_fd == -1){
+        log_err("Failed to accept incoming connection");
+        close(new_connection_fd);
+        return -1;
+    }
+
+    return new_connection_fd;
+}

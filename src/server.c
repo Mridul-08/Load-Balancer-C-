@@ -45,3 +45,20 @@ int accept_incoming_connection(struct socket_connection sever_socket){
 
     return new_connection_fd;
 }
+
+/**
+ * @brief Connect the server to a particular socket 
+**/
+
+int connect_to_target(struct socket_connection *target_socket, char *host, unsigned int port){
+    
+    if(get_socket(&(*target_socket), host, port) < 0){
+        close(target_socket->socket_fd);
+        return -1;
+    }
+    if(connect_to_socket(*target_socket) < 0){
+        close(target_socket->socket_fd);
+        return -2;
+    }
+    return 0;
+}

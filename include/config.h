@@ -2,6 +2,13 @@
 #define CONFIG_H
 
 #include <arpa/inet.h>
+#include <limits.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#include "./env.h"
 
 // setting up a reverse proxy
 struct target_backend {
